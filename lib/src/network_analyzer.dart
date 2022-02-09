@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 /*
  * ping_discover_network
  * Created by Andrey Ushakov
@@ -30,7 +32,7 @@ class NetworkAnalyzer {
     if (port < 1 || port > 65535) {
       throw 'Incorrect port';
     }
-    // TODO : validate subnet
+    // TODO: validate subnet
 
     for (int i = 1; i < 256; ++i) {
       final host = '$subnet.$i';
@@ -45,7 +47,7 @@ class NetworkAnalyzer {
         }
 
         // Check if connection timed out or we got one of predefined errors
-        if (e.osError == null || _errorCodes.contains(e.osError.errorCode)) {
+        if (e.osError == null || _errorCodes.contains(e.osError?.errorCode ?? -1)) {
           yield NetworkAddress(host, false);
         } else {
           // Error 23,24: Too many open files in system
@@ -83,7 +85,7 @@ class NetworkAnalyzer {
         }
 
         // Check if connection timed out or we got one of predefined errors
-        if (e.osError == null || _errorCodes.contains(e.osError.errorCode)) {
+        if (e.osError == null || _errorCodes.contains(e.osError?.errorCode ?? -1)) {
           out.sink.add(NetworkAddress(host, false));
         } else {
           // Error 23,24: Too many open files in system
@@ -92,9 +94,7 @@ class NetworkAnalyzer {
       });
     }
 
-    Future.wait<Socket>(futures)
-        .then<void>((sockets) => out.close())
-        .catchError((dynamic e) => out.close());
+    Future.wait<Socket>(futures).then<void>((sockets) => out.close()).catchError((dynamic e) => out.close());
 
     return out.stream;
   }
