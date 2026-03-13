@@ -30,7 +30,7 @@ class NetworkAnalyzer {
     Duration timeout = const Duration(milliseconds: 400),
   }) async* {
     if (port < 1 || port > 65535) {
-      throw 'Incorrect port';
+      throw ArgumentError.value(port, 'port', 'Port must be in range 1..65535');
     }
     // TODO: validate subnet
 
@@ -42,7 +42,7 @@ class NetworkAnalyzer {
         s.destroy();
         yield NetworkAddress(host, true);
       } catch (e) {
-        if (!(e is SocketException)) {
+        if (e is! SocketException) {
           rethrow;
         }
 
@@ -66,7 +66,7 @@ class NetworkAnalyzer {
     Duration timeout = const Duration(seconds: 5),
   }) {
     if (port < 1 || port > 65535) {
-      throw 'Incorrect port';
+      throw ArgumentError.value(port, 'port', 'Port must be in range 1..65535');
     }
     // TODO : validate subnet
 
@@ -80,7 +80,7 @@ class NetworkAnalyzer {
         socket.destroy();
         out.sink.add(NetworkAddress(host, true));
       }).catchError((dynamic e) {
-        if (!(e is SocketException)) {
+        if (e is! SocketException) {
           throw e;
         }
 
@@ -113,6 +113,7 @@ class NetworkAnalyzer {
   // 101: Network is unreachable
   // 111: Connection refused
   // 113: No route to host
+  // 110: Connection timed out
   // <empty>: SocketException: Connection timed out
-  static final _errorCodes = [13, 49, 61, 64, 65, 101, 111, 113];
+  static final _errorCodes = [13, 49, 61, 64, 65, 101, 110, 111, 113];
 }

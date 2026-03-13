@@ -12,6 +12,11 @@ The library tested on both, Android and iOS platforms.
 
 [[pub.dev page]](https://pub.dev/packages/ping_discover_network) | [[Documentation]](https://pub.dev/documentation/ping_discover_network/latest/)
 
+## Requirements
+
+- Dart `>=3.11.1 <4.0.0`
+- Flutter `>=3.41.4`
+
 ## Getting Started
 
 *Check complete examples in /example folder.*

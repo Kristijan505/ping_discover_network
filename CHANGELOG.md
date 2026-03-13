@@ -1,3 +1,9 @@
+## [0.3.0]
+* Updated minimum SDK requirements to Dart `>=3.11.1 <4.0.0` and Flutter `>=3.41.4`.
+* Replaced legacy lint config with `flutter_lints`.
+* Changed invalid port handling in `discover` and `discover2` to throw `ArgumentError`.
+* Treated socket timeout errno `110` as a non-fatal ping result.
+
 ## [0.2.0]
 * Two pinging methods: ping ip addresses one by one OR all at once.
 
